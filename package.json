@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/ebusho/YAFA/issues"
   },
-  "homepage": "https://github.com/ebusho/YAFA#readme"
+  "homepage": "https://github.com/ebusho/YAFA#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
 }
