@@ -1,25 +1,36 @@
 import express from "express";
+import transactions from "./controller.js";
 
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  res.send("List of all transactions!");
+  const allTransactions = transactions.getAll();
+  res.json(allTransactions);
 });
 
 router.get("/:id", (req, res) => {
   const transactionId = req.params.id;
-  res.send(`Details of transaction with ID: ${transactionId}`);
+  const transaction = transactions.getById(transactionId);
+  if (!transaction) {
+    return res.status(404).json({ error: "Transaction not found" });
+  }
+  res.json(transaction);
 });
 
 router.post("/", (req, res) => {
   const newTransaction = req.body;
-  res.status(201).send(`Transaction created with ID: ${newTransaction.id}`);
+  const createdTransaction = transactions.create(newTransaction);
+  res.status(201).json(createdTransaction);
 }); 
 
 router.put("/:id", (req, res) => {
   const transactionId = req.params.id;
   const updatedTransaction = req.body;
-  res.send(`Transaction with ID: ${transactionId} updated`);
+  const transaction = transactions.update(transactionId, updatedTransaction);
+  if (!transaction) {
+    return res.status(404).json({ error: "Transaction not found" });
+  }
+  res.json(transaction);
 });
 
 export default router;
