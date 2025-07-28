@@ -1,0 +1,19 @@
+{
+  "name": "yafa",
+  "version": "0.0.1",
+  "description": "Yet Another Finance App",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ebusho/YAFA.git"
+  },
+  "author": "Alis Adrović",
+  "license": "AGPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/ebusho/YAFA/issues"
+  },
+  "homepage": "https://github.com/ebusho/YAFA#readme"
+}
