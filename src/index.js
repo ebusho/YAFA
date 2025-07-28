@@ -1,11 +1,11 @@
 import express from "express";
 
+import router from "./router.js";
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.get("/", (req, res) => {
-  res.send("Welcome to YAFA - Yet Another Finance App!");
-});
+app.use("/", router);
 
 app.listen(PORT, () => {
   console.log(`Server is up and running on port ${PORT}`);
