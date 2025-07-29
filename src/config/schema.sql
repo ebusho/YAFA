@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS transactions (
-    id TEXT PRIMARY KEY,
-    amount INTEGER NOT NULL,
+    id INTEGER PRIMARY KEY,
+    amount DECIMAL NOT NULL,
     description TEXT
 )

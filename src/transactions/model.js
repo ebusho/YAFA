@@ -1,5 +1,3 @@
-import crypto from "crypto";
-
 import db from "../config/db.js";
 
 function getAll() {
@@ -8,31 +6,29 @@ function getAll() {
 }
 
 function getById(id) {
-  const stmt = db.prepare("SELECT * FROM transactions WHERE id = ?");
-  return stmt.get(id);
+  const stmt = db.prepare("SELECT * FROM transactions WHERE id = @id");
+  return stmt.get({ id });
 }
 
 function create(data) {
-  const id = crypto.randomUUID();
   const { amount, description } = data;
 
-  const stmt = db.prepare("INSERT INTO transactions (id, amount, description) VALUES (?, ?, ?)");
-  stmt.run(id, amount, description);
+  const stmt = db.prepare("INSERT INTO transactions (amount, description) VALUES (@amount, @description) RETURNING *");
+  const createdEntry = stmt.get({ amount, description });
 
-  return { id, amount, description };
+  return createdEntry;
 }
 
 function update(id, data) {
   const { amount, description } = data;
 
-  const stmt = db.prepare("UPDATE transactions SET amount = ?, description = ? WHERE id = ?");
+  const stmt = db.prepare("UPDATE transactions SET amount = @amount, description = @description WHERE id = @id RETURNING *");
+  const updatedEntry = stmt.get({ amount, description, id });
 
-  const result = stmt.run(amount, description, id);
-
-  if (result.changes > 0) {
-    return { id, amount, description };
+  if (!updatedEntry) {
+    return null;
   }
-  return null;
+  return updatedEntry;
 }
 
 export default {
